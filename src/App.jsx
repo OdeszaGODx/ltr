@@ -55,6 +55,7 @@ const strings = {
     sendButton: 'Send to Telegram',
     sending: 'Sending...',
     sent: 'Sent!',
+    sendError: 'Something went wrong, please try again',
   },
   th: {
     badge: 'สำหรับคุณ',
@@ -81,6 +82,7 @@ const strings = {
     sendButton: 'ส่งไปยัง Telegram',
     sending: 'กำลังส่ง...',
     sent: 'ส่งเรียบร้อย!',
+    sendError: 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง',
   },
 }
 
@@ -132,6 +134,7 @@ const memories = [
       en: 'The days we keep close in our hearts.',
       th: 'วันที่เราเก็บไว้ในหัวใจ',
     },
+    photo: '/photos/hands.jpg',
   },
 ]
 
@@ -174,50 +177,6 @@ function getCountdown() {
   const minutes = Math.floor((diff / (1000 * 60)) % 60)
   const seconds = Math.floor((diff / 1000) % 60)
   return { days, hours, minutes, seconds }
-}
-
-function createTrackPattern(index) {
-  const patterns = [
-    [261.63, 329.63, 392.0],
-    [293.66, 369.99, 440.0],
-    [220.0, 277.18, 349.23],
-  ]
-  return patterns[index % patterns.length]
-}
-
-function playTrackNow(ctx, index) {
-  const now = ctx.currentTime + 0.1
-  const duration = 12
-  const gain = ctx.createGain()
-  gain.gain.setValueAtTime(0, now)
-  gain.gain.linearRampToValueAtTime(0.04, now + 0.8)
-  gain.gain.setTargetAtTime(0.02, now + 4, 0.8)
-  gain.gain.setTargetAtTime(0.001, now + duration - 1.2, 1)
-  gain.connect(ctx.destination)
-
-  const frequencies = createTrackPattern(index)
-  const oscillators = frequencies.map((freq) => {
-    const osc = ctx.createOscillator()
-    osc.type = 'triangle'
-    osc.frequency.value = freq
-    osc.connect(gain)
-    osc.start(now)
-    osc.stop(now + duration)
-    return osc
-  })
-
-  return {
-    stop: () => {
-      oscillators.forEach((osc) => {
-        try {
-          osc.stop()
-        } catch (error) {
-          // ignore if already stopped
-        }
-      })
-      gain.disconnect()
-    },
-  }
 }
 
 export default function App() {
@@ -419,7 +378,12 @@ export default function App() {
         <h2>{t.galleryTitle}</h2>
         <div className="gallery-grid">
           {memories.map((memory) => (
-            <div key={memory.title.en} className="gallery-card">
+            <div key={memory.title.en} className={`gallery-card ${memory.photo ? 'has-photo' : ''}`}>
+              {memory.photo && (
+                <div className="gallery-photo">
+                  <img src={memory.photo} alt={memory.title[language]} loading="lazy" />
+                </div>
+              )}
               <h3>{memory.title[language]}</h3>
               <p>{memory.caption[language]}</p>
             </div>
@@ -445,12 +409,15 @@ export default function App() {
             {isSending ? t.sending : t.sendButton}
           </button>
           {sendStatus === 'sent' && <div className="send-feedback send-success">{t.sent}</div>}
-          {sendStatus === 'error' && <div className="send-feedback send-error">Error</div>}
+          {sendStatus === 'error' && <div className="send-feedback send-error">{t.sendError}</div>}
         </div>
         <div className="love-card">
           <h2>{t.loveTitle}</h2>
           <p>{t.loveDescription}</p>
-          <div className="heart">❤</div>
+          <div className="love-photo">
+            <img src="/photos/bouquet.jpg" alt={t.loveTitle} loading="lazy" />
+            <span className="love-photo-heart">❤</span>
+          </div>
         </div>
       </section>
     </div>

@@ -1,9 +1,5 @@
 name = "ltr-pages"
-type = "service"
+pages_build_output_dir = "dist"
 
-[env.production]
-vars = { TELEGRAM_CHAT_ID = "385521095" }
-
-[[env.production.secrets]]
-# TELEGRAM_BOT_TOKEN should be set via Cloudflare Pages environment variables
-# Add it in the Pages dashboard as a Secret
+# TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID are set as encrypted secrets via
+# `wrangler pages secret put <NAME> --project-name=ltr`, not committed here.
