@@ -1,7 +1,16 @@
-export async function onRequest(context) {
-  const { request, env } = context
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url)
 
-  // Handle CORS
+    if (url.pathname === '/api/send-message') {
+      return handleSendMessage(request, env)
+    }
+
+    return env.ASSETS.fetch(request)
+  },
+}
+
+async function handleSendMessage(request, env) {
   if (request.method === 'OPTIONS') {
     return new Response(null, {
       headers: {

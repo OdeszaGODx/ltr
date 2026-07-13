@@ -1,5 +1,10 @@
-name = "ltr-pages"
-pages_build_output_dir = "dist"
+name = "ltr"
+main = "src/worker.js"
+compatibility_date = "2026-07-13"
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
 
 # TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID are set as encrypted secrets via
-# `wrangler pages secret put <NAME> --project-name=ltr`, not committed here.
+# `wrangler secret put <NAME>`, not committed here.
