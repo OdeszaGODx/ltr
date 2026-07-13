@@ -56,6 +56,10 @@ const strings = {
     sending: 'Sending...',
     sent: 'Sent!',
     sendError: 'Something went wrong, please try again',
+    reasonsTitle: '50 reasons I love you',
+    reasonsSubtitle: 'Tap the card to reveal one reason at a time.',
+    reasonsPrompt: 'Tap to reveal a reason',
+    reasonsNext: 'Another reason',
   },
   th: {
     badge: 'สำหรับคุณ',
@@ -83,6 +87,10 @@ const strings = {
     sending: 'กำลังส่ง...',
     sent: 'ส่งเรียบร้อย!',
     sendError: 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง',
+    reasonsTitle: '50 เหตุผลที่ผมรักคุณ',
+    reasonsSubtitle: 'แตะที่การ์ดเพื่อดูเหตุผลทีละข้อ',
+    reasonsPrompt: 'แตะเพื่อดูเหตุผล',
+    reasonsNext: 'อีกเหตุผลหนึ่ง',
   },
 }
 
@@ -165,6 +173,59 @@ const events = [
   },
 ]
 
+const reasons = [
+  'I love it when you smile',
+  "Because you're the best there is",
+  "I love how you laugh when you try to hold it in and just can't",
+  "For how you listen, even when I haven't figured out what I'm trying to say yet",
+  'For your patience',
+  'For making me feel at home with you, wherever we are',
+  "I love how you squint when you're concentrating",
+  "For your honesty, even when it's uncomfortable",
+  'For believing in me more than I sometimes believe in myself',
+  'I love our quiet mornings together',
+  'For how you take care of the people around you',
+  'For your curiosity about everything new',
+  'I love how your voice sounds when you talk about the things you love',
+  'For your courage to try the unfamiliar',
+  'For making it safe to be vulnerable with you',
+  'I love how you hold my hand',
+  'For your sense of humor',
+  'For turning an ordinary day into something special',
+  'I love the way you get amazed by simple things',
+  'For your care for the little details',
+  'For never being afraid to tell me the truth',
+  'I love how you look right after waking up',
+  'For your inner strength',
+  'For making me a better person just by being near you',
+  'I love how happy the little things make you',
+  'For your loyalty',
+  'For your ability to forgive',
+  "I love how we can be silent together without it ever feeling awkward",
+  'For your ability to see the good in people',
+  'For remembering the little things that matter to me',
+  "I love your energy when you're passionate about something",
+  'For your tenderness',
+  'For never giving up',
+  "I love how you take care of me, even without saying it out loud",
+  'For your wisdom',
+  'For making even the most ordinary moments interesting',
+  "I love how you dance when you think no one's watching",
+  'For your patience with my quirks',
+  "For celebrating my wins like they're your own",
+  'I love your smile when you see something funny',
+  'For your sincerity',
+  'For making the future feel inspiring instead of scary',
+  'I love how you care for your family',
+  'For your ability to surprise me again and again',
+  'For staying true to yourself in any situation',
+  'I love our quiet evenings together',
+  'For your kind heart',
+  'For choosing me',
+  "I love who I become when I'm with you",
+  'Because I love you — just because, for no reason at all, and for every reason at once',
+]
+
 function formatTwo(value) {
   return String(value).padStart(2, '0')
 }
@@ -188,6 +249,8 @@ export default function App() {
   const [daysTogether, setDaysTogether] = useState(getDaysTogether())
   const [isSending, setIsSending] = useState(false)
   const [sendStatus, setSendStatus] = useState('')
+  const [reasonIndex, setReasonIndex] = useState(null)
+  const [showSecret, setShowSecret] = useState(false)
 
   const audioRef = useRef(null)
 
@@ -280,6 +343,14 @@ export default function App() {
     } finally {
       setIsSending(false)
     }
+  }
+
+  const pickReason = () => {
+    let index
+    do {
+      index = Math.floor(Math.random() * reasons.length)
+    } while (index === reasonIndex && reasons.length > 1)
+    setReasonIndex(index)
   }
 
   const t = strings[language]
@@ -391,6 +462,32 @@ export default function App() {
         </div>
       </section>
 
+      <section className="reasons-section">
+        <h2>{t.reasonsTitle}</h2>
+        <p>{t.reasonsSubtitle}</p>
+        <div className="reason-card-wrap">
+          <div
+            className={`reason-card ${reasonIndex !== null ? 'flipped' : ''}`}
+            onClick={() => reasonIndex === null && pickReason()}
+          >
+            <div className="reason-card-inner">
+              <div className="reason-card-face reason-card-front">
+                <span className="reason-card-heart">❤</span>
+                <p>{t.reasonsPrompt}</p>
+              </div>
+              <div className="reason-card-face reason-card-back">
+                <p key={reasonIndex}>{reasonIndex !== null ? reasons[reasonIndex] : ''}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {reasonIndex !== null && (
+          <button type="button" className="reason-next-button" onClick={pickReason}>
+            {t.reasonsNext}
+          </button>
+        )}
+      </section>
+
       <section className="note-section">
         <div className="note-card">
           <h2>{t.letterTitle}</h2>
@@ -420,6 +517,36 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      <button
+        type="button"
+        className="secret-heart-button"
+        aria-label="secret"
+        onClick={() => setShowSecret(true)}
+      >
+        ❤
+      </button>
+
+      {showSecret && (
+        <div className="secret-overlay" onClick={() => setShowSecret(false)}>
+          <div className="secret-card" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              className="secret-close"
+              aria-label="close"
+              onClick={() => setShowSecret(false)}
+            >
+              ×
+            </button>
+            <div className="secret-hearts" aria-hidden="true">
+              {Array.from({ length: 6 }).map((_, index) => (
+                <span key={index} className={`secret-float-heart sfh-${index + 1}`}>❤</span>
+              ))}
+            </div>
+            <p className="secret-message">I just love you ❤</p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
