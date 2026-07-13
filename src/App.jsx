@@ -52,6 +52,9 @@ const strings = {
     loveTitle: 'I love you',
     loveDescription: 'You are always in my thoughts, even when the phone is quiet.',
     languageLabel: 'Language',
+    sendButton: 'Send to Telegram',
+    sending: 'Sending...',
+    sent: 'Sent!',
   },
   th: {
     badge: 'สำหรับคุณ',
@@ -75,6 +78,9 @@ const strings = {
     loveTitle: 'ผมรักคุณ',
     loveDescription: 'คุณอยู่ในความคิดของผมเสมอ แม้สายโทรศัพท์จะเงียบ.',
     languageLabel: 'ภาษา',
+    sendButton: 'ส่งไปยัง Telegram',
+    sending: 'กำลังส่ง...',
+    sent: 'ส่งเรียบร้อย!',
   },
 }
 
@@ -221,6 +227,8 @@ export default function App() {
   const [currentTrack, setCurrentTrack] = useState(0)
   const [language, setLanguage] = useState('th')
   const [daysTogether, setDaysTogether] = useState(getDaysTogether())
+  const [isSending, setIsSending] = useState(false)
+  const [sendStatus, setSendStatus] = useState('')
 
   const audioRef = useRef(null)
 
@@ -276,6 +284,36 @@ export default function App() {
 
     setCurrentTrack(0)
     setIsPlaying(true)
+  }
+
+  const handleSendMessage = async () => {
+    if (!note.trim()) return
+
+    setIsSending(true)
+    setSendStatus('')
+
+    try {
+      const response = await fetch('/api/send-message', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: note }),
+      })
+
+      if (response.ok) {
+        setSendStatus('sent')
+        setNote('')
+        setTimeout(() => setSendStatus(''), 3000)
+      } else {
+        setSendStatus('error')
+        setTimeout(() => setSendStatus(''), 3000)
+      }
+    } catch (error) {
+      console.error('Error sending message:', error)
+      setSendStatus('error')
+      setTimeout(() => setSendStatus(''), 3000)
+    } finally {
+      setIsSending(false)
+    }
   }
 
   const t = strings[language]
@@ -390,7 +428,17 @@ export default function App() {
             value={note}
             onChange={(e) => setNote(e.target.value)}
             placeholder={t.placeholder}
+            disabled={isSending}
           />
+          <button
+            onClick={handleSendMessage}
+            disabled={isSending || !note.trim()}
+            className="send-button"
+          >
+            {isSending ? t.sending : t.sendButton}
+          </button>
+          {sendStatus === 'sent' && <div className="send-feedback send-success">{t.sent}</div>}
+          {sendStatus === 'error' && <div className="send-feedback send-error">Error</div>}
         </div>
         <div className="love-card">
           <h2>{t.loveTitle}</h2>
