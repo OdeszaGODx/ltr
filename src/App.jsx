@@ -293,17 +293,24 @@ export default function App() {
     setSendStatus('')
 
     try {
+      const controller = new AbortController()
+      const timeout = setTimeout(() => controller.abort(), 10000)
+
       const response = await fetch('/api/send-message', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: note }),
+        signal: controller.signal,
       })
+
+      clearTimeout(timeout)
 
       if (response.ok) {
         setSendStatus('sent')
         setNote('')
         setTimeout(() => setSendStatus(''), 3000)
       } else {
+        console.error('Send failed:', response.status, response.statusText)
         setSendStatus('error')
         setTimeout(() => setSendStatus(''), 3000)
       }

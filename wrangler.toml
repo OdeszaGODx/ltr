@@ -3,3 +3,7 @@ type = "service"
 
 [env.production]
 vars = { TELEGRAM_CHAT_ID = "385521095" }
+
+[[env.production.secrets]]
+# TELEGRAM_BOT_TOKEN should be set via Cloudflare Pages environment variables
+# Add it in the Pages dashboard as a Secret
