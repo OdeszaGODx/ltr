@@ -60,6 +60,7 @@ const strings = {
     reasonsSubtitle: 'Tap the card to reveal one reason at a time.',
     reasonsPrompt: 'Tap to reveal a reason',
     reasonsNext: 'Another reason',
+    secretMessage: 'I just love you ❤',
   },
   th: {
     badge: 'สำหรับคุณ',
@@ -91,6 +92,7 @@ const strings = {
     reasonsSubtitle: 'แตะที่การ์ดเพื่อดูเหตุผลทีละข้อ',
     reasonsPrompt: 'แตะเพื่อดูเหตุผล',
     reasonsNext: 'อีกเหตุผลหนึ่ง',
+    secretMessage: 'ผมแค่รักคุณ ❤',
   },
 }
 
@@ -174,56 +176,56 @@ const events = [
 ]
 
 const reasons = [
-  'I love it when you smile',
-  "Because you're the best there is",
-  "I love how you laugh when you try to hold it in and just can't",
-  "For how you listen, even when I haven't figured out what I'm trying to say yet",
-  'For your patience',
-  'For making me feel at home with you, wherever we are',
-  "I love how you squint when you're concentrating",
-  "For your honesty, even when it's uncomfortable",
-  'For believing in me more than I sometimes believe in myself',
-  'I love our quiet mornings together',
-  'For how you take care of the people around you',
-  'For your curiosity about everything new',
-  'I love how your voice sounds when you talk about the things you love',
-  'For your courage to try the unfamiliar',
-  'For making it safe to be vulnerable with you',
-  'I love how you hold my hand',
-  'For your sense of humor',
-  'For turning an ordinary day into something special',
-  'I love the way you get amazed by simple things',
-  'For your care for the little details',
-  'For never being afraid to tell me the truth',
-  'I love how you look right after waking up',
-  'For your inner strength',
-  'For making me a better person just by being near you',
-  'I love how happy the little things make you',
-  'For your loyalty',
-  'For your ability to forgive',
-  "I love how we can be silent together without it ever feeling awkward",
-  'For your ability to see the good in people',
-  'For remembering the little things that matter to me',
-  "I love your energy when you're passionate about something",
-  'For your tenderness',
-  'For never giving up',
-  "I love how you take care of me, even without saying it out loud",
-  'For your wisdom',
-  'For making even the most ordinary moments interesting',
-  "I love how you dance when you think no one's watching",
-  'For your patience with my quirks',
-  "For celebrating my wins like they're your own",
-  'I love your smile when you see something funny',
-  'For your sincerity',
-  'For making the future feel inspiring instead of scary',
-  'I love how you care for your family',
-  'For your ability to surprise me again and again',
-  'For staying true to yourself in any situation',
-  'I love our quiet evenings together',
-  'For your kind heart',
-  'For choosing me',
-  "I love who I become when I'm with you",
-  'Because I love you — just because, for no reason at all, and for every reason at once',
+  { en: 'I love it when you smile', th: 'ผมชอบเวลาที่คุณยิ้ม' },
+  { en: "Because you're the best there is", th: 'เพราะคุณคือคนที่ดีที่สุด' },
+  { en: "I love how you laugh when you try to hold it in and just can't", th: 'ผมชอบเวลาที่คุณพยายามกลั้นหัวเราะแต่กลั้นไม่อยู่' },
+  { en: "For how you listen, even when I haven't figured out what I'm trying to say yet", th: 'เพราะคุณรับฟังผม แม้ตอนที่ผมเองยังไม่รู้ว่าจะพูดอะไร' },
+  { en: 'For your patience', th: 'เพราะความอดทนของคุณ' },
+  { en: 'For making me feel at home with you, wherever we are', th: 'เพราะไม่ว่าจะอยู่ที่ไหน อยู่กับคุณก็รู้สึกเหมือนอยู่บ้าน' },
+  { en: "I love how you squint when you're concentrating", th: 'ผมชอบเวลาที่คุณหรี่ตาตอนตั้งใจทำอะไรบางอย่าง' },
+  { en: "For your honesty, even when it's uncomfortable", th: 'เพราะความจริงใจของคุณ แม้ในเรื่องที่พูดยาก' },
+  { en: 'For believing in me more than I sometimes believe in myself', th: 'เพราะบางครั้งคุณเชื่อในตัวผม มากกว่าที่ผมเชื่อในตัวเอง' },
+  { en: 'I love our quiet mornings together', th: 'ผมชอบเช้าวันที่เงียบสงบที่เราอยู่ด้วยกัน' },
+  { en: 'For how you take care of the people around you', th: 'เพราะวิธีที่คุณดูแลคนรอบตัว' },
+  { en: 'For your curiosity about everything new', th: 'เพราะความอยากรู้อยากเห็นของคุณต่อสิ่งใหม่ ๆ' },
+  { en: 'I love how your voice sounds when you talk about the things you love', th: 'ผมชอบน้ำเสียงของคุณเวลาพูดถึงสิ่งที่คุณรัก' },
+  { en: 'For your courage to try the unfamiliar', th: 'เพราะความกล้าของคุณที่จะลองสิ่งที่ไม่คุ้นเคย' },
+  { en: 'For making it safe to be vulnerable with you', th: 'เพราะอยู่กับคุณแล้วผมกล้าเปิดใจ ไม่ต้องกลัว' },
+  { en: 'I love how you hold my hand', th: 'ผมชอบเวลาที่คุณจับมือผม' },
+  { en: 'For your sense of humor', th: 'เพราะอารมณ์ขันของคุณ' },
+  { en: 'For turning an ordinary day into something special', th: 'เพราะคุณทำให้วันธรรมดากลายเป็นวันพิเศษ' },
+  { en: 'I love the way you get amazed by simple things', th: 'ผมชอบเวลาที่คุณตื่นเต้นกับเรื่องเล็ก ๆ น้อย ๆ' },
+  { en: 'For your care for the little details', th: 'เพราะความใส่ใจในรายละเอียดเล็ก ๆ ของคุณ' },
+  { en: 'For never being afraid to tell me the truth', th: 'เพราะคุณไม่กลัวที่จะพูดความจริงกับผม' },
+  { en: 'I love how you look right after waking up', th: 'ผมชอบหน้าคุณตอนเพิ่งตื่นนอน' },
+  { en: 'For your inner strength', th: 'เพราะความเข้มแข็งภายในของคุณ' },
+  { en: 'For making me a better person just by being near you', th: 'เพราะแค่อยู่ใกล้คุณ ผมก็กลายเป็นคนที่ดีขึ้น' },
+  { en: 'I love how happy the little things make you', th: 'ผมชอบเวลาที่คุณมีความสุขกับเรื่องเล็ก ๆ' },
+  { en: 'For your loyalty', th: 'เพราะความซื่อสัตย์ของคุณ' },
+  { en: 'For your ability to forgive', th: 'เพราะความสามารถในการให้อภัยของคุณ' },
+  { en: 'I love how we can be silent together without it ever feeling awkward', th: 'ผมชอบที่เราเงียบด้วยกันได้ โดยไม่รู้สึกอึดอัด' },
+  { en: 'For your ability to see the good in people', th: 'เพราะคุณมองเห็นด้านดีของคนอื่นเสมอ' },
+  { en: 'For remembering the little things that matter to me', th: 'เพราะคุณจำเรื่องเล็ก ๆ ที่สำคัญกับผมได้เสมอ' },
+  { en: "I love your energy when you're passionate about something", th: 'ผมชอบพลังของคุณเวลาที่หลงใหลในอะไรสักอย่าง' },
+  { en: 'For your tenderness', th: 'เพราะความอ่อนโยนของคุณ' },
+  { en: 'For never giving up', th: 'เพราะคุณไม่เคยยอมแพ้' },
+  { en: 'I love how you take care of me, even without saying it out loud', th: 'ผมชอบที่คุณดูแลผม แม้จะไม่ได้พูดออกมา' },
+  { en: 'For your wisdom', th: 'เพราะความฉลาดรอบคอบของคุณ' },
+  { en: 'For making even the most ordinary moments interesting', th: 'เพราะคุณทำให้แม้แต่ช่วงเวลาธรรมดาก็น่าสนใจ' },
+  { en: "I love how you dance when you think no one's watching", th: 'ผมชอบเวลาที่คุณเต้นตอนคิดว่าไม่มีใครมอง' },
+  { en: 'For your patience with my quirks', th: 'เพราะความอดทนของคุณต่อความแปลกของผม' },
+  { en: "For celebrating my wins like they're your own", th: 'เพราะคุณดีใจกับความสำเร็จของผม เหมือนมันเป็นของคุณเอง' },
+  { en: 'I love your smile when you see something funny', th: 'ผมชอบรอยยิ้มของคุณเวลาเจอเรื่องตลก' },
+  { en: 'For your sincerity', th: 'เพราะความจริงใจของคุณ' },
+  { en: 'For making the future feel inspiring instead of scary', th: 'เพราะอยู่กับคุณแล้วอนาคตดูน่าตื่นเต้น ไม่น่ากลัว' },
+  { en: 'I love how you care for your family', th: 'ผมชอบวิธีที่คุณดูแลครอบครัวของคุณ' },
+  { en: 'For your ability to surprise me again and again', th: 'เพราะคุณทำให้ผมประหลาดใจได้ครั้งแล้วครั้งเล่า' },
+  { en: 'For staying true to yourself in any situation', th: 'เพราะคุณเป็นตัวเองเสมอไม่ว่าจะอยู่ในสถานการณ์ไหน' },
+  { en: 'I love our quiet evenings together', th: 'ผมชอบค่ำคืนเงียบ ๆ ที่เราอยู่ด้วยกัน' },
+  { en: 'For your kind heart', th: 'เพราะหัวใจที่ดีของคุณ' },
+  { en: 'For choosing me', th: 'เพราะคุณเลือกผม' },
+  { en: "I love who I become when I'm with you", th: 'ผมชอบตัวเองในเวอร์ชันที่ดีขึ้น เวลาอยู่กับคุณ' },
+  { en: 'Because I love you — just because, for no reason at all, and for every reason at once', th: 'เพราะผมรักคุณ — แค่นั้นแหละ ไม่มีเหตุผล และก็มีทุกเหตุผลในเวลาเดียวกัน' },
 ]
 
 function formatTwo(value) {
@@ -476,7 +478,7 @@ export default function App() {
                 <p>{t.reasonsPrompt}</p>
               </div>
               <div className="reason-card-face reason-card-back">
-                <p key={reasonIndex}>{reasonIndex !== null ? reasons[reasonIndex] : ''}</p>
+                <p key={reasonIndex}>{reasonIndex !== null ? reasons[reasonIndex][language] : ''}</p>
               </div>
             </div>
           </div>
@@ -543,7 +545,7 @@ export default function App() {
                 <span key={index} className={`secret-float-heart sfh-${index + 1}`}>❤</span>
               ))}
             </div>
-            <p className="secret-message">I just love you ❤</p>
+            <p className="secret-message">{t.secretMessage}</p>
           </div>
         </div>
       )}
